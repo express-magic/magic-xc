@@ -9,13 +9,20 @@ function xc(cmd, cb) {
   });
 }
 
-function execCb(cb, err, stdout, stderr) {
+function xc(cmd, args, cb) {
+  exec(cmd, function (err, stdout, stderr) {
+    args.stdout = stdout;
+    execCb(cb, err, args, stderr);
+  });
+}
+
+function execCb(cb, err, args, stderr) {
   err = err || stderr;
   if ( err ) { log(err, 'error'); }
-  if ( stdout ) { log(stdout); }
+  if ( args ) { log(args); }
   if ( stderr ) { log(stderr, 'error'); }
 
-  cb(err, stdout);
+  cb(err, args);
 }
 
 module.exports = xc;
