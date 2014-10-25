@@ -1,0 +1,13 @@
+{
+  "name": "magic-xc",
+  "version": "0.0.1",
+  "private": true,
+  "main": "xc.js",
+  "dependencies": {
+    "magic-log": "git+https://github.com/express-magic/magic-log"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/express-magic/magic-xc.git"
+  }
+}
