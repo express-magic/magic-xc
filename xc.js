@@ -2,17 +2,17 @@
 
 var exec = require('child_process').exec
   , log  = require('magic-log')
+;
 
-function xc(cmd, cb) {
-  exec(cmd, function (err, stdout, stderr) {
+function xc(cmd, options, cb) {
+  if ( ! cb && typeof options === 'function' ) {
+    cb = options;
+    options = {};
+  }
+  options = options || {};
+
+  exec(cmd, options, function (err, stdout, stderr) {
     execCb(cb, err, stdout, stderr);
-  });
-}
-
-function xc(cmd, args, cb) {
-  exec(cmd, function (err, stdout, stderr) {
-    args.stdout = stdout;
-    execCb(cb, err, args, stderr);
   });
 }
 
@@ -22,7 +22,9 @@ function execCb(cb, err, args, stderr) {
   if ( args ) { log(args); }
   if ( stderr ) { log(stderr, 'error'); }
 
-  cb(err, args);
+  if ( typeof cb === 'function') {
+    cb(err, args);
+  }
 }
 
 module.exports = xc;
