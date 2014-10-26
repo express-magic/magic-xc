@@ -1,14 +1,10 @@
 'use strict';
 
-var exec = require('child_process').exec
-  , log  = require('magic-log')
-;
-
+var exec = require('child_process').exec;
 
 function XC (opts) {
   var self = this;
-  self.options = opts || {}
-
+  self.options = opts || {};
 
   return function xc(cmd, args, cb) {
     if ( ! cb && typeof args === 'function' ) {
