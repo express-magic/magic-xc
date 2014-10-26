@@ -10,27 +10,25 @@ function XC (opts) {
   self.options = opts || {}
 
 
-  return function xc(cmd, options, cb) {
-    if ( ! cb && typeof options === 'function' ) {
-      cb = options;
-      options = null;
+  return function xc(cmd, args, cb) {
+    if ( ! cb && typeof args === 'function' ) {
+      cb = args;
+      args = {};
     }
-    options = options || self.options;
+    args = args || {};
 
-    exec(cmd, options, function (err, stdout, stderr) {
-      execCb(cb, err, stdout, stderr);
+    exec(cmd, self.options, function (err, stdout, stderr) {
+      args.std = {err: err, stdout: stdout, stderr: stderr};
+      execCb(args, cb);
     });
   }
 }
 
-function execCb(cb, err, args, stderr) {
-  err = err || stderr;
-  if ( err ) { log(err, 'error'); }
-  if ( args ) { log(args); }
-  if ( stderr ) { log(stderr, 'error'); }
+function execCb(args, cb) {
+  args = args || {};
 
   if ( typeof cb === 'function') {
-    cb(err, args);
+    cb(null, args);
   }
 }
 
