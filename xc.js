@@ -5,7 +5,7 @@ var exec = require('child_process').exec;
 function XC (opts) {
   var self = this;
   self.options = opts || {};
-  console.log('NEW VERSION LOADED');
+
   return function xc(cmd, args, cb) {
     if ( ! cb && typeof args === 'function' ) {
       cb = args;
